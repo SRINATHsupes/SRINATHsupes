@@ -14,6 +14,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Show workflow identity
+        env:
+          GH_LOGIN: ${{ github.repository_owner }}
+          GH_REPOSITORY: ${{ github.repository }}
+          GH_ACTOR: ${{ github.actor }}
+        run: |
+          echo "github.repository = $GH_REPOSITORY"
+          echo "github.repository_owner = $GH_LOGIN"
+          echo "github.actor = $GH_ACTOR"
+
       - name: Run stats generator
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
