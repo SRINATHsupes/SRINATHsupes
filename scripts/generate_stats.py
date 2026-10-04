@@ -8,16 +8,18 @@ GITHUB_API = "https://api.github.com/graphql"
 
 
 QUERY = """
-query {
-  viewer {
+query($login: String!) {
+  user(login: $login) {
     login
     name
-    publicRepositories: repositories(
-      ownerAffiliations: OWNER
+
+    repositories(
       first: 100
+      ownerAffiliations: OWNER
       privacy: PUBLIC
     ) {
       totalCount
+
       nodes {
         name
         stargazerCount
@@ -29,11 +31,14 @@ query {
 """
 
 
-def github_graphql(token: str, query: str) -> dict:
+def github_graphql(token: str, login: str) -> dict:
     """Send a GraphQL query to GitHub."""
 
     payload = json.dumps({
-        "query": query
+        "query": QUERY,
+        "variables": {
+            "login": login,
+        },
     }).encode("utf-8")
 
     request = urllib.request.Request(
@@ -53,6 +58,7 @@ def github_graphql(token: str, query: str) -> dict:
 
     except urllib.error.HTTPError as error:
         body = error.read().decode("utf-8")
+
         raise RuntimeError(
             f"GitHub API returned HTTP {error.code}:\n{body}"
         ) from error
@@ -68,28 +74,38 @@ def github_graphql(token: str, query: str) -> dict:
 
 def main() -> None:
     token = os.environ.get("GITHUB_TOKEN")
+    login = os.environ.get("GH_LOGIN")
 
     if not token:
         raise RuntimeError(
             "GITHUB_TOKEN is not set."
         )
 
+    if not login:
+        raise RuntimeError(
+            "GH_LOGIN is not set."
+        )
+
     print("Connecting to GitHub GraphQL API...")
+    print(f"Querying profile: {login}")
 
     data = github_graphql(
         token,
-        QUERY,
+        login,
     )
 
-    viewer = data["viewer"]
-    repositories = viewer["publicRepositories"]
+    user = data["user"]
+    repositories = user["repositories"]
 
     print()
     print("GitHub account")
     print("----------------")
-    print(f"Login: {viewer['login']}")
-    print(f"Name:  {viewer['name']}")
-    print(f"Public repositories: {repositories['totalCount']}")
+    print(f"Login: {user['login']}")
+    print(f"Name:  {user['name']}")
+    print(
+        f"Public repositories: "
+        f"{repositories['totalCount']}"
+    )
 
     print()
     print("Repositories")
