@@ -14,9 +14,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Debug workflow
+        env:
+          GH_LOGIN: SRINATHsupes
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Actor: $GITHUB_ACTOR"
+          echo "GH_LOGIN: $GH_LOGIN"
+          echo "Commit: $GITHUB_SHA"
+          echo
+          echo "Python file:"
+          grep -n "Querying profile" scripts/generate_stats.py
+
       - name: Run stats generator
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_LOGIN: SRINATHsupes
         run: |
+          echo "GH_LOGIN before Python: $GH_LOGIN"
           python3 scripts/generate_stats.py
