@@ -42,7 +42,6 @@ I enjoy taking an idea from **"what if?" → prototype → working system**.
    • [other actual repositories]
 
 📊 Data / Analytics
-   • Titanic ML
    • Amazon Fine Food Reviews
    • [actual projects]
 
