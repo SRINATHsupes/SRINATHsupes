@@ -33,6 +33,20 @@ I enjoy taking an idea from **"what if?" → prototype → working system**.
 
 ## 🚀 What I'm Building
 
+🧠 AI / Machine Learning
+   • CNN Lung Cancer Detection
+   • [other actual ML projects]
+
+💻 Software Development
+   • Employee CRUD
+   • [other actual repositories]
+
+📊 Data / Analytics
+   • Titanic ML
+   • Amazon Fine Food Reviews
+   • [actual projects]
+
+   
 ### 🌌 Constellation
 
 An educational platform designed around **learning through exploration and real-world activities**.
@@ -97,7 +111,6 @@ The goal is simple:
 | Project | Focus |
 |---|---|
 | 🌌 **Constellation** | Educational technology / React Native |
-| 👨‍💼 **Employee CRUD** | React + FastAPI + SQL |
 | 🥽 **AR / Wearable Experiments** | Haptics, sensors and interfaces |
 | 🔬 **Electronics Experiments** | Hardware and embedded systems |
 
